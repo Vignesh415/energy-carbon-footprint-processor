@@ -1,0 +1,53 @@
+[
+  {
+    "id": "SCOPE_1",
+    "name": "Scope 1",
+    "label": "Fuels, refrigerants, process emissions",
+    "subScopes": [
+      {
+        "id": "SCOPE_1_1",
+        "name": "1.1",
+        "label": "Fuels / Heat"
+      },
+      {
+        "id": "SCOPE_1_2",
+        "name": "1.2",
+        "label": "Fuels for mobility/fleet"
+      }
+    ]
+  },
+  {
+    "id": "SCOPE_2",
+    "name": "Scope 2",
+    "label": "Related energies",
+    "subScopes": [
+      {
+        "id": "SCOPE_2_1",
+        "name": "2.1",
+        "label": "Electricity incl. e-fleet"
+      },
+      {
+        "id": "SCOPE_2_2",
+        "name": "2.2",
+        "label": "District heating/cooling"
+      },
+      {
+        "id": "SCOPE_2_3",
+        "name": "2.3",
+        "label": "Mainline steam"
+      }
+    ]
+  },
+  {
+    "id": "SCOPE_3",
+    "name": "Scope 3",
+    "label": "Upstream and downstream value chain",
+    "subScopes": [
+      {
+        "id": "SCOPE_3_6",
+        "name": "3.6",
+        "label": "Business trips"
+      }
+    ]
+  }
+]

@@ -1,0 +1,345 @@
+[
+  {
+    "energySourceId": "1000",
+    "scopeId": "SCOPE_2_1",
+    "name": "Electricity mix (Germany)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.442"
+  },
+  {
+    "energySourceId": "1001",
+    "scopeId": "SCOPE_2_1",
+    "name": "Green electricity (renewable, purchased)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "1002",
+    "scopeId": "SCOPE_2_1",
+    "name": "Electricity from own generation (non-renewable)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "1003",
+    "scopeId": "SCOPE_2_1",
+    "name": "Green electricity from own generation (renewable)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "1004",
+    "scopeId": "SCOPE_2_1",
+    "name": "Other electricity (renewable, purchased)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "1005",
+    "scopeId": "SCOPE_2_1",
+    "name": "Other electricity (non-renewable)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "2000",
+    "scopeId": "SCOPE_1_1",
+    "name": "Heavy fuel oil",
+    "conversionFactor": "12184",
+    "emissionFactor": "0.25849"
+  },
+  {
+    "energySourceId": "2001",
+    "scopeId": "SCOPE_1_1",
+    "name": "Light heating oil",
+    "conversionFactor": "11.055",
+    "emissionFactor": "0.28413"
+  },
+  {
+    "energySourceId": "2002",
+    "scopeId": "SCOPE_1_1",
+    "name": "Lignite",
+    "conversionFactor": "6582.77777777778",
+    "emissionFactor": "0.33611"
+  },
+  {
+    "energySourceId": "2003",
+    "scopeId": "SCOPE_1_1",
+    "name": "Hard coal",
+    "conversionFactor": "6582.77777777778",
+    "emissionFactor": "0.33611"
+  },
+  {
+    "energySourceId": "2004",
+    "scopeId": "SCOPE_1_1",
+    "name": "Natural gas",
+    "conversionFactor": "1",
+    "emissionFactor": "0.20226"
+  },
+  {
+    "energySourceId": "2005",
+    "scopeId": "SCOPE_1_1",
+    "name": "LPG",
+    "conversionFactor": "12.765",
+    "emissionFactor": "0.22999"
+  },
+  {
+    "energySourceId": "2006",
+    "scopeId": "SCOPE_1_2",
+    "name": "Petrol",
+    "conversionFactor": "8.965",
+    "emissionFactor": "0.23242"
+  },
+  {
+    "energySourceId": "2007",
+    "scopeId": "SCOPE_1_2",
+    "name": "Diesel",
+    "conversionFactor": "9.885",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "2008",
+    "scopeId": "SCOPE_1_2",
+    "name": "Hydrogen",
+    "conversionFactor": "33.33",
+    "emissionFactor": "0.04"
+  },
+  {
+    "energySourceId": "2009",
+    "scopeId": "SCOPE_1_1",
+    "name": "Biogas internal/external",
+    "conversionFactor": "6.3894",
+    "emissionFactor": "0.00022"
+  },
+  {
+    "energySourceId": "2011",
+    "scopeId": "SCOPE_1_1",
+    "name": "Wood (shavings)",
+    "conversionFactor": "955.834",
+    "emissionFactor": "0.01074"
+  },
+  {
+    "energySourceId": "2012",
+    "scopeId": "SCOPE_1_1",
+    "name": "Wood (logs)",
+    "conversionFactor": "1736.55",
+    "emissionFactor": "0.01074"
+  },
+  {
+    "energySourceId": "2013",
+    "scopeId": "SCOPE_1_1",
+    "name": "Wood (pellets)",
+    "conversionFactor": "3120",
+    "emissionFactor": "0.01074"
+  },
+  {
+    "energySourceId": "2014",
+    "scopeId": "SCOPE_2_3",
+    "name": "Long-distance steam",
+    "conversionFactor": "769.14",
+    "emissionFactor": "0.17791"
+  },
+  {
+    "energySourceId": "2015",
+    "scopeId": "SCOPE_2_2",
+    "name": "District heating",
+    "conversionFactor": "1",
+    "emissionFactor": "0.17791"
+  },
+  {
+    "energySourceId": "2016",
+    "scopeId": "SCOPE_2_2",
+    "name": "Remote cooling",
+    "conversionFactor": "1",
+    "emissionFactor": "0.17791"
+  },
+  {
+    "energySourceId": "2017",
+    "scopeId": "SCOPE_1_1",
+    "name": "Other fuels (Scope 1.1)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "2018",
+    "scopeId": "SCOPE_1_2",
+    "name": "Other fuels for mobility (Scope 1.2)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "2021",
+    "scopeId": "SCOPE_1_1",
+    "name": "Solar thermal energy",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "2022",
+    "scopeId": "SCOPE_1_1",
+    "name": "Heat recovery",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "3000",
+    "scopeId": "SCOPE_1_2",
+    "name": "Petrol",
+    "conversionFactor": "8.965",
+    "emissionFactor": "0.23242"
+  },
+  {
+    "energySourceId": "3006",
+    "scopeId": "SCOPE_1_2",
+    "name": "Diesel",
+    "conversionFactor": "9.885",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "3015",
+    "scopeId": "SCOPE_1_2",
+    "name": "Autogas/LPG",
+    "conversionFactor": "12.765",
+    "emissionFactor": "0.22999"
+  },
+  {
+    "energySourceId": "3022",
+    "scopeId": "SCOPE_2_1",
+    "name": "Electricity (own charging stations)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.442"
+  },
+  {
+    "energySourceId": "3031",
+    "scopeId": "SCOPE_2_1",
+    "name": "Electricity (third-party charging stations)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.442"
+  },
+  {
+    "energySourceId": "3040",
+    "scopeId": "SCOPE_1_2",
+    "name": "Petrol (Plug-In Hybrid)",
+    "conversionFactor": "0.09245",
+    "emissionFactor": "0.23242"
+  },
+  {
+    "energySourceId": "3043",
+    "scopeId": "SCOPE_1_2",
+    "name": "Diesel (Plug-In Hybrid)",
+    "conversionFactor": "0.09245",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "3046",
+    "scopeId": "SCOPE_1_2",
+    "name": "Hydrogen",
+    "conversionFactor": "33.33",
+    "emissionFactor": "0.04"
+  },
+  {
+    "energySourceId": "3047",
+    "scopeId": "SCOPE_2_1",
+    "name": "Other electricity for mobility (renewable)",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "3048",
+    "scopeId": "SCOPE_1_2",
+    "name": "Other fuels for mobility",
+    "conversionFactor": "1",
+    "emissionFactor": "0"
+  },
+  {
+    "energySourceId": "4000",
+    "scopeId": "SCOPE_3_6",
+    "name": "Railway",
+    "conversionFactor": "1",
+    "emissionFactor": "0.0351"
+  },
+  {
+    "energySourceId": "4002",
+    "scopeId": "SCOPE_3_6",
+    "name": "Bus / long-distance bus",
+    "conversionFactor": "1",
+    "emissionFactor": "0.0271814013422819"
+  },
+  {
+    "energySourceId": "4003",
+    "scopeId": "SCOPE_3_6",
+    "name": "Aeroplane (Economy Class)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.27101"
+  },
+  {
+    "energySourceId": "4005",
+    "scopeId": "SCOPE_3_6",
+    "name": "Aeroplane (Business Class)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.27294"
+  },
+  {
+    "energySourceId": "4008",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car (petrol)",
+    "conversionFactor": "8.965",
+    "emissionFactor": "0.23242"
+  },
+  {
+    "energySourceId": "4012",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car (Diesel)",
+    "conversionFactor": "9.885",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "4021",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car (Gas)",
+    "conversionFactor": "12.765",
+    "emissionFactor": "0.22999"
+  },
+  {
+    "energySourceId": "4026",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car (Electricity)",
+    "conversionFactor": "1",
+    "emissionFactor": "0.442"
+  },
+  {
+    "energySourceId": "4030",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car  (Hybrid, Petrol)",
+    "conversionFactor": "0.09245",
+    "emissionFactor": "0.23242"
+  },
+  {
+    "energySourceId": "4033",
+    "scopeId": "SCOPE_3_6",
+    "name": "Rental car  (Hybrid, Diesel)",
+    "conversionFactor": "0.09245",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "4036",
+    "scopeId": "SCOPE_3_6",
+    "name": "Taxi (Diesel)",
+    "conversionFactor": "0.82514",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "4037",
+    "scopeId": "SCOPE_3_6",
+    "name": "Taxi (Electricity)",
+    "conversionFactor": "0.25762",
+    "emissionFactor": "0.442"
+  },
+  {
+    "energySourceId": "4038",
+    "scopeId": "SCOPE_3_6",
+    "name": "Taxi (Hybrid, Diesel)",
+    "conversionFactor": "0.30172",
+    "emissionFactor": "0.25076"
+  }
+]
