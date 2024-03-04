@@ -25,7 +25,7 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
         try{
             //read the energy source data json file and convert to object
             JsonUtils jsonUtils = new JsonUtils();
-            String energyDataSource = jsonUtils.readFile("D:\\MyWorkspace\\energy-carbon-footprint-processor\\energy-carbon-footprint-processor\\src\\main\\resources\\EnergyDataSource.json");
+            String energyDataSource = jsonUtils.readFile("D:\\MyWorkspace\\GitRepo\\energy-carbon-footprint-processor\\src\\main\\resources\\EnergyDataSource.json");
             JsonArray energySourceArray = JsonParser.parseString(energyDataSource).getAsJsonArray();
             final Map<String, EnergySource> energySourceMap = new HashMap<>();
             energySourceArray.asList().forEach(jsonElement-> {
@@ -35,7 +35,7 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
 
             log.info("EnergyDataSource: " + energySourceMap);
             //read the scopeLabel data source json file and convert to object
-            String scopeLabelDataSource = jsonUtils.readFile("D:\\MyWorkspace\\energy-carbon-footprint-processor\\energy-carbon-footprint-processor\\src\\main\\resources\\ScopeLabelDataSource.json");
+            String scopeLabelDataSource = jsonUtils.readFile("D:\\MyWorkspace\\GitRepo\\energy-carbon-footprint-processor\\src\\main\\resources\\ScopeLabelDataSource.json");
             JsonArray scopeLabelSourceArray = JsonParser.parseString(scopeLabelDataSource).getAsJsonArray();
             log.info("ScopeLabelSourceList: " + scopeLabelSourceArray);
             final Map<String, ScopeLabel> scopeLabelMap = new LinkedHashMap<>();
@@ -44,16 +44,26 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
                 String key = jsonObject.get("id").getAsString();
                 ScopeLabel scopeLabel = new Gson().fromJson(jsonObject, ScopeLabel.class);
                 scopeLabelMap.put(key, new ScopeLabel(scopeLabel.getId(), scopeLabel.getName(), scopeLabel.getLabel()));
-                List<ScopeLabel> subScopes = scopeLabel.getSubScopes();
-                subScopes.forEach(subScope -> {
-                    String key1 = subScope.getId();
-                    scopeLabelMap.put(key1, new ScopeLabel(subScope.getId(), subScope.getName(), subScope.getLabel()));
-                });
+                if(scopeLabel.getSubScopes() !=null && !scopeLabel.getSubScopes().isEmpty()){
+                    List<ScopeLabel> subScopes = scopeLabel.getSubScopes();
+                    subScopes.forEach(subScope -> {
+                        String key1 = subScope.getId();
+                        scopeLabelMap.put(key1, new ScopeLabel(subScope.getId(), subScope.getName(), subScope.getLabel()));
+                        if(subScope.getSubScopes() != null && !subScope.getSubScopes().isEmpty()){
+                            List<ScopeLabel> subScopes1 = subScope.getSubScopes();
+                            subScopes1.forEach(subScope1 ->{
+                                String key2 = subScope1.getId();
+                                scopeLabelMap.put(key2, new ScopeLabel(subScope1.getId(), subScope1.getName(), subScope1.getLabel()));
+                            });
+                        }
+                    });
+                }
             });
 
-            log.info("scopeLabelMap: " + new Gson().toJson(scopeLabelMap));
+            log.info("scopeLabel: " + new Gson().toJson(scopeLabelMap));
+            log.info("scopeLabelMap: " + scopeLabelMap);
             //For each energy data calculate the carbonFootPrint data
-            Map<String, CarbonFootprint> carbonFootprintHashMap = new LinkedHashMap<>();
+            Map<String, CarbonFootprint> carbonFootprintHashMap = new HashMap<>();
             for(EnergyUsage energyUsage : energyUsageList){
                 //get energy source data based on the energy source id
                 EnergySource energySource = energySourceMap.get(energyUsage.getEnergySourceId());
@@ -75,6 +85,17 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
                     double existingCo2 = carbonFootprint.getCo2();
                     carbonFootprint.setCo2(existingCo2+co2);
                     carbonFootprintHashMap.put(scopeLabel.getName(), carbonFootprint);
+                } else if(scopeLabel.getName().length() > 3){
+                    log.info("Carbon Label: " + scopeLabel.getName().substring(0, scopeLabel.getName().length()-2));
+                    CarbonFootprint carbonFootprint1 = carbonFootprintHashMap.get(scopeLabel.getName().substring(0,scopeLabel.getName().length()-2));
+                    carbonFootprintHashMap.put(scopeLabel.getName(), new CarbonFootprint(scopeLabel.getName(),
+                            scopeLabel.getLabel().concat(" (").concat(energyUsage.getDescription()).concat(")"),
+                            Double.parseDouble(df.format(energy)),Double.parseDouble(df.format(co2))));
+                    double existingEnergy = carbonFootprint1.getEnergy();
+                    carbonFootprint1.setEnergy(existingEnergy+energy);
+                    double existingCo2 = carbonFootprint1.getCo2();
+                    carbonFootprint1.setCo2(existingCo2+co2);
+                    carbonFootprintHashMap.put(scopeLabel.getName().substring(0, scopeLabel.getName().length()-2), carbonFootprint1);
                 } else {
                     carbonFootprintHashMap.put(scopeLabel.getName(), new CarbonFootprint(scopeLabel.getName(),
                             scopeLabel.getLabel(),Double.parseDouble(df.format(energy)),Double.parseDouble(df.format(co2))));
@@ -95,14 +116,29 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
                 if(entry.getKey().startsWith("1")){
                     CarbonFootprint carbonFootprint = entry.getValue();
                     if(carbonFootprintMap.containsKey("Scope 1")){
-                        CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 1");
-                        double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
-                        carbonFootprint1Root.setEnergy(totalEnergy);
-                        double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
-                        carbonFootprint1Root.setCo2(totalCo2);
-                        List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint1Root.getChildren();
-                        existingCarbonFoorPrint.add(carbonFootprint);
-                        carbonFootprint1Root.setChildren(existingCarbonFoorPrint);
+                        if(entry.getKey().length() > 3){
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 1");
+                            carbonFootprint1Root.getChildren().forEach(carbonFootprint2Root -> {
+                                if(carbonFootprint2Root.getName().equals(entry.getKey().substring(0, entry.getKey().length()-2))){
+                                    double totalEnergy = carbonFootprint2Root.getEnergy()+carbonFootprint.getEnergy();
+                                    carbonFootprint2Root.setEnergy(totalEnergy);
+                                    double totalCo2 = carbonFootprint2Root.getCo2()+carbonFootprint.getCo2();
+                                    carbonFootprint2Root.setCo2(totalCo2);
+                                    List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint2Root.getChildren();
+                                    existingCarbonFoorPrint.add(carbonFootprint);
+                                    carbonFootprint2Root.setChildren(existingCarbonFoorPrint);
+                                }
+                            });
+                        } else {
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 1");
+                            double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
+                            carbonFootprint1Root.setEnergy(totalEnergy);
+                            double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
+                            carbonFootprint1Root.setCo2(totalCo2);
+                            List<CarbonFootprint> existingCarbonFootPrint = carbonFootprint1Root.getChildren();
+                            existingCarbonFootPrint.add(carbonFootprint);
+                            carbonFootprint1Root.setChildren(existingCarbonFootPrint);
+                        }
                     } else {
                         //add root element for scope_1
                         List<CarbonFootprint> carbonFootprintList = new ArrayList<>();
@@ -115,14 +151,29 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
                 } else if (entry.getKey().startsWith("2")) {
                     CarbonFootprint carbonFootprint = entry.getValue();
                     if(carbonFootprintMap.containsKey("Scope 2")){
-                        CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 2");
-                        double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
-                        carbonFootprint1Root.setEnergy(totalEnergy);
-                        double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
-                        carbonFootprint1Root.setCo2(totalCo2);
-                        List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint1Root.getChildren();
-                        existingCarbonFoorPrint.add(carbonFootprint);
-                        carbonFootprint1Root.setChildren(existingCarbonFoorPrint);
+                        if(entry.getKey().length() > 3){
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 2");
+                            carbonFootprint1Root.getChildren().forEach(carbonFootprint2Root -> {
+                                if(carbonFootprint2Root.getName().equals(entry.getKey().substring(0, entry.getKey().length()-2))){
+                                    double totalEnergy = carbonFootprint2Root.getEnergy()+carbonFootprint.getEnergy();
+                                    carbonFootprint2Root.setEnergy(totalEnergy);
+                                    double totalCo2 = carbonFootprint2Root.getCo2()+carbonFootprint.getCo2();
+                                    carbonFootprint2Root.setCo2(totalCo2);
+                                    List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint2Root.getChildren();
+                                    existingCarbonFoorPrint.add(carbonFootprint);
+                                    carbonFootprint2Root.setChildren(existingCarbonFoorPrint);
+                                }
+                            });
+                        } else {
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 2");
+                            double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
+                            carbonFootprint1Root.setEnergy(totalEnergy);
+                            double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
+                            carbonFootprint1Root.setCo2(totalCo2);
+                            List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint1Root.getChildren();
+                            existingCarbonFoorPrint.add(carbonFootprint);
+                            carbonFootprint1Root.setChildren(existingCarbonFoorPrint);
+                        }
                     } else {
                         //add root element for scope_1
                         List<CarbonFootprint> carbonFootprintList = new ArrayList<>();
@@ -134,14 +185,29 @@ public class EnergyToCarbonFootPrintServiceImpl implements EnergyToCarbonFootPri
                 } else if (entry.getKey().startsWith("3")) {
                     CarbonFootprint carbonFootprint = entry.getValue();
                     if(carbonFootprintMap.containsKey("Scope 3")){
-                        CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 3");
-                        double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
-                        carbonFootprint1Root.setEnergy(totalEnergy);
-                        double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
-                        carbonFootprint1Root.setCo2(totalCo2);
-                        List<CarbonFootprint> existingCarbonFoorPrint = carbonFootprint1Root.getChildren();
-                        existingCarbonFoorPrint.add(carbonFootprint);
-                        carbonFootprint1Root.setChildren(existingCarbonFoorPrint);
+                        if(entry.getKey().length() >3){
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 3");
+                            carbonFootprint1Root.getChildren().forEach(carbonFootprint2Root -> {
+                                if(carbonFootprint2Root.getName().equals(entry.getKey().substring(0, entry.getKey().length()-2))){
+                                    double totalEnergy = carbonFootprint2Root.getEnergy()+carbonFootprint.getEnergy();
+                                    carbonFootprint2Root.setEnergy(totalEnergy);
+                                    double totalCo2 = carbonFootprint2Root.getCo2()+carbonFootprint.getCo2();
+                                    carbonFootprint2Root.setCo2(totalCo2);
+                                    List<CarbonFootprint> existingCarbonFootPrint = carbonFootprint2Root.getChildren();
+                                    existingCarbonFootPrint.add(carbonFootprint);
+                                    carbonFootprint2Root.setChildren(existingCarbonFootPrint);
+                                }
+                            });
+                        } else {
+                            CarbonFootprint carbonFootprint1Root = carbonFootprintMap.get("Scope 3");
+                            double totalEnergy = carbonFootprint1Root.getEnergy()+carbonFootprint.getEnergy();
+                            carbonFootprint1Root.setEnergy(totalEnergy);
+                            double totalCo2 = carbonFootprint1Root.getCo2()+carbonFootprint.getCo2();
+                            carbonFootprint1Root.setCo2(totalCo2);
+                            List<CarbonFootprint> existingCarbonFootPrint = carbonFootprint1Root.getChildren();
+                            existingCarbonFootPrint.add(carbonFootprint);
+                            carbonFootprint1Root.setChildren(existingCarbonFootPrint);
+                        }
                     } else {
                         //add root element for scope_1
                         List<CarbonFootprint> carbonFootprintList = new ArrayList<>();

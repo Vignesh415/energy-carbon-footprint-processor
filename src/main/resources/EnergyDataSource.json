@@ -341,5 +341,19 @@
     "name": "Taxi (Hybrid, Diesel)",
     "conversionFactor": "0.30172",
     "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "5000",
+    "scopeId": "SCOPE_1_1_1",
+    "name": "Light heating oil",
+    "conversionFactor": "0.30172",
+    "emissionFactor": "0.25076"
+  },
+  {
+    "energySourceId": "6000",
+    "scopeId": "SCOPE_2_1_1",
+    "name": "EV Charge",
+    "conversionFactor": "0.30172",
+    "emissionFactor": "0.25076"
   }
 ]

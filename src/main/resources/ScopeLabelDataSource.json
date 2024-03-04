@@ -7,7 +7,14 @@
       {
         "id": "SCOPE_1_1",
         "name": "1.1",
-        "label": "Fuels / Heat"
+        "label": "Fuels / Heat",
+        "subScopes": [
+          {
+            "id": "SCOPE_1_1_1",
+            "name": "1.1.1",
+            "label": "Light heating oil"
+          }
+        ]
       },
       {
         "id": "SCOPE_1_2",
@@ -24,7 +31,14 @@
       {
         "id": "SCOPE_2_1",
         "name": "2.1",
-        "label": "Electricity incl. e-fleet"
+        "label": "Electricity incl. e-fleet",
+        "subScopes": [
+          {
+            "id": "SCOPE_2_1_1",
+            "name": "2.1.1",
+            "label": "EV Charge"
+          }
+        ]
       },
       {
         "id": "SCOPE_2_2",
